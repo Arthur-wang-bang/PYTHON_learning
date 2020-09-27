@@ -1,0 +1,88 @@
+在python中认为规定4个空格缩进，缩进的代码可以理解成一个块，但是使用缩进也需要注意有时不一样的缩进产生的结果会不一样，接下来就来看一个列子
+ 
+ 
+一、for...in循环 
+例：自定义一个函数 ，最后返回传入值的平方相加
+复制代码
+def calc(numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    return sum
+print (calc([1,2,4]))
+复制代码
+上面的代码返回了正常在值：21
+ 
+接下来把代码稍微改一下
+复制代码
+def calc(numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+        return sum
+print (calc([1,2,4]))
+复制代码
+现在返回的值又是什么呢：结果返回1
+
+为什么会返回1，仔细分析一下，代码我将return进行了缩进，这时return是基于for的每一个循环返回一个值，并且return当第一个条件满足时就不在往下执行了，所以当传入第一个1时，sum=0+1*1=1,return 1就不再进行后面的循环了。而return不缩进那么return和for是同一级，当所有的for执行完后才执行return然后返回最终的结果
+
+用将return替换成print更容易理解
+
+复制代码
+def calc(numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    print (sum)
+print (calc([1,2,4]))
+复制代码
+21
+None
+>>> 
+而缩进print
+
+复制代码
+def calc(numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+        print (sum)
+print (calc([1,2,4]))
+复制代码
+1
+5
+21
+None
+>>> 
+由于prInt不像return不会满足条件就不往下执行，所以打印出了每一次循环的值。
+
+二、if..else
+
+在if..else条件判断中，一个块里面的语句都要保持缩进
+
+复制代码
+def my_abs(x):
+    if x>=0:
+        x=x-1
+        return (x)
+    else:
+        x=x+1
+复制代码
+在这里return就必须缩进，如果和if保持一样的话会导致后面的else定义失败，因为if...elif..else需要保持一致缩进。
+
+如果这样写就错了：
+
+复制代码
+def my_abs(x):
+    if x>=0:
+        x=x-1
+    return (x)
+    else:
+        x=x+1
+复制代码
+由于return和if..else处于一样的缩进，导致else关联不上if
+
+
+ 使用缩进要明白每一行缩进的意义，否则返回的结果可能不是正确的结果
+ 
+ 来源：https://www.cnblogs.com/chenmh/p/5689305.html
